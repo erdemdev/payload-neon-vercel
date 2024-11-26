@@ -9,6 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { uploadthingStorage } from '@payloadcms/storage-uploadthing'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,6 +35,15 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    uploadthingStorage({
+      collections: {
+        media: true,
+      },
+      options: {
+        token: process.env.UPLOADTHING_TOKEN,
+        acl: 'public-read',
+      },
+    }),
     // storage-adapter-placeholder
   ],
 })
